@@ -94,6 +94,7 @@ Graphe * lire_graphe(char * nomFichier)
 
     graphe->orientation=orientation;
     graphe->ordre=ordre;
+    graphe->taille = taille;                                            //modif mais pas sur
 
     // créer les arêtes du graphe
     for (int i=0; i<taille; ++i)
@@ -184,9 +185,17 @@ void BFS(Graphe *pGraphe, int sommetinit, File* F) {
     }
 }
 
-void DFS(){
+void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
+    if(pGraphe == NULL){
+        fprintf(stderr, "erreur - le graphe n'existe pas");
+        return;
+    }
 
+    pSommet Sommet = pGraphe->pSommet[sommetinit];
+
+    while()
 }
+
 
 
 int main()
@@ -195,8 +204,10 @@ int main()
 
     int sommetdepart;
 
-    File fileattente = fileVide();     //vient créer une file pour le BFS et DFS
+    int etape = -1;
 
+    File fileattenteBFS = fileVide();     //vient créer une file pour le BFS
+    File fileattenteDFS = fileVide();     //DFS
     char nom_fichier[50];
 
     printf("entrer le nom du fichier du labyrinthe:");
@@ -204,11 +215,17 @@ int main()
 
     g = lire_graphe(nom_fichier);
 
+    for (int i=0; i<g->ordre; i++){       //on initalise la découverte des sommets pour le DFS (l'téta est stocké dans la structure des sommets
+        g->pSommet[i]->tagged = false;
+    }
+
     ///saisie du numéro du sommet initial pour lancer un BFS puis un DSF
     printf("quel est le sommet initial");
     scanf("%d",&sommetdepart);
 
-    BFS(g, sommetdepart,&fileattente);
+    //BFS(g, sommetdepart,&fileattenteBFS);
+
+    DFS(g, sommetdepart, etape, &fileattenteDFS);
 
     /// afficher le graphe
     //graphe_afficher(g);

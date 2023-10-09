@@ -1,4 +1,8 @@
 // fifo.h
+
+//code source : http://morissardjerome.free.fr/langageC/graphe2.html
+
+
 #include "cellule.h"
 
 struct _file {
