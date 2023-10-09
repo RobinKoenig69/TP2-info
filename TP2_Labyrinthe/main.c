@@ -152,6 +152,7 @@ void BFS(Graphe *pGraphe, int sommetinit, File* F) {
             defiler(*F);
 
             sommetdecouvert[numsommetactuel] = true;
+            pGraphe->pSommet[numsommetactuel]->tagged = true;
 
             if(Sommet->arc == NULL){
                 printf("le sommet n'a pas de descendant");
@@ -185,17 +186,23 @@ void BFS(Graphe *pGraphe, int sommetinit, File* F) {
     }
 }
 
-void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
+/*void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
     if(pGraphe == NULL){
         fprintf(stderr, "erreur - le graphe n'existe pas");
         return;
     }
 
-    pSommet Sommet = pGraphe->pSommet[sommetinit];
+    pGraphe->pSommet[sommetinit]->tagged = true;
 
-    while()
+
+    if(Sommet->arc != NULL){
+        DFS(pGraphe, Sommet->arc->sommet, etape, F);
+    }
+    else{
+
+    }
 }
-
+*/
 
 
 int main()
@@ -204,7 +211,7 @@ int main()
 
     int sommetdepart;
 
-    int etape = -1;
+    int etape = 0;
 
     File fileattenteBFS = fileVide();     //vient créer une file pour le BFS
     File fileattenteDFS = fileVide();     //DFS
@@ -225,7 +232,7 @@ int main()
 
     //BFS(g, sommetdepart,&fileattenteBFS);
 
-    DFS(g, sommetdepart, etape, &fileattenteDFS);
+    //DFS(g, sommetdepart, etape, &fileattenteDFS);
 
     /// afficher le graphe
     //graphe_afficher(g);
