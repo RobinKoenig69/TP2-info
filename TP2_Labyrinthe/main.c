@@ -186,23 +186,51 @@ void BFS(Graphe *pGraphe, int sommetinit, File* F) {
     }
 }
 
-/*void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
-    if(pGraphe == NULL){
+/*void DFS(Graphe *pGraphe, int sommet, int etape, File* F) {
+    if (pGraphe == NULL) {
         fprintf(stderr, "erreur - le graphe n'existe pas");
-        return;
+        exit(0);
     }
 
-    pGraphe->pSommet[sommetinit]->tagged = true;
+    printf("Etape %d du DFS\n", etape);
+    ecrireFile(*F);
 
+    pSommet Sommet = pGraphe->pSommet[sommet];
+    Sommet->tagged = true;
 
-    if(Sommet->arc != NULL){
-        DFS(pGraphe, Sommet->arc->sommet, etape, F);
+    pArc Arccourant = Sommet->arc;
+
+    while (Arccourant != NULL) {
+        int voisin = Arccourant->sommet;
+        if (!pGraphe->pSommet[voisin]->tagged) {
+            enfiler(*F, voisin);
+            DFS(pGraphe, voisin, ++etape, F);
+        }
+        Arccourant = Arccourant->arc_suivant;
     }
-    else{
+}*/
 
+void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
+    if (pGraphe == NULL) {
+        fprintf(stderr, "erreur - le graphe n'existe pas");
+        exit(0);
     }
+
+    enfiler(*F, sommetinit);
+
+    pSommet Sommet = pGraphe->pSommet[sommetinit];
+
+    pArc Arccourant = Sommet->arc;
+
+    /*while (Arccourant != NULL) {
+        if(pGraphe->pSommet[Arccourant->sommet] != true){
+            enfiler(*F, Arccourant->sommet);
+        }
+        sommetdecouvert[Arccourant->sommet] = true;
+        Arccourant = Arccourant->arc_suivant;
+    }*/
 }
-*/
+
 
 
 int main()
@@ -232,7 +260,7 @@ int main()
 
     //BFS(g, sommetdepart,&fileattenteBFS);
 
-    //DFS(g, sommetdepart, etape, &fileattenteDFS);
+    DFS(g, sommetdepart, etape, &fileattenteDFS);
 
     /// afficher le graphe
     //graphe_afficher(g);
