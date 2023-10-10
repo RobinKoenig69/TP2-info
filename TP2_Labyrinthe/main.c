@@ -215,6 +215,11 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
         fprintf(stderr, "erreur - le graphe n'existe pas");
         exit(0);
     }
+
+    if(etape == 0){
+        pGraphe->pSommet[sommetinit]->tagged = true;
+    }
+
     if (pGraphe->pSommet[sommetinit]->tagged == false){
         enfiler(*F, sommetinit);
         pGraphe->pSommet[sommetinit]->tagged = true;
@@ -241,6 +246,7 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
         DFS(pGraphe,sommetlast, etape, F);
     }
     else{
+        printf("Fin du DFS / pas de successeurs");
         return;
     }
 }
