@@ -45,6 +45,15 @@ typage tete(File F) {
     return(F->tete->element);
 }
 
+typage dernierElement(File F) {
+    if (F == NULL || longueur(F) == 0) {
+        printf("File est vide ou n'existe pas - dernierElement\n");
+        return 0; // Valeur par défaut (à adapter selon vos besoins)
+    }
+
+    return F->queue->element;
+}
+
 void defiler(File F) {
     Cellule cellule;
 
@@ -57,6 +66,35 @@ void defiler(File F) {
     --(F->longueur);
     free(cellule);
 }
+
+typage defilerDernier(File F) {
+    if (F == NULL || longueur(F) == 0) {
+        printf("File est vide ou n'existe pas - defilerDernier\n");
+        return 0;
+    }
+
+    if (longueur(F) == 1){
+        typage element = F->tete->element;
+        F->tete = F->queue = NULL;
+        free(F->tete);
+        F->longueur = 0;
+        return element;
+    }
+
+    Cellule avantDernier = F->tete;
+    while (avantDernier->suivant != F->queue) {
+        avantDernier = avantDernier->suivant;
+    }
+
+    typage element = F->queue->element;
+    free(F->queue);
+    F->queue = avantDernier;
+    avantDernier->suivant = NULL;
+    F->longueur--;
+
+    return element;
+}
+
 
 typage defilement(File F) {
     Cellule cellule;

@@ -215,21 +215,59 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
         fprintf(stderr, "erreur - le graphe n'existe pas");
         exit(0);
     }
+    if (pGraphe->pSommet[sommetinit]->tagged == false){
+        enfiler(*F, sommetinit);
+        pGraphe->pSommet[sommetinit]->tagged = true;
+    }
 
-    enfiler(*F, sommetinit);
+    pArc Arccourant = pGraphe->pSommet[sommetinit]->arc;
 
-    pSommet Sommet = pGraphe->pSommet[sommetinit];
+    while (Arccourant != NULL){
+        if(pGraphe->pSommet[Arccourant->sommet]->tagged == false){
+            enfiler(*F, Arccourant->sommet);
+            pGraphe->pSommet[Arccourant->sommet]->tagged = true;
+        }
+        Arccourant = Arccourant->arc_suivant;
+        //ecrireFile(*F);
+    }
+
+    etape++;
+
+    if (longueur(*F) != 0){
+        printf("Etape %d du DFS \n", etape);
+        ecrireFile(*F);
+        int sommetlast = defilerDernier(*F);        //on supprime le dernier sommet de la liste
+
+        DFS(pGraphe,sommetlast, etape, F);
+    }
+    else{
+        return;
+    }
+}
+
+/*void DFS(Graphe *pGraphe, int sommet, int etape, File* F) {
+    if (pGraphe == NULL) {
+        fprintf(stderr, "erreur - le graphe n'existe pas");
+        exit(0);
+    }
+
+    printf("Etape %d du DFS (Sommet %d)\n", etape, sommet);
+    ecrireFile(*F);
+
+    pSommet Sommet = pGraphe->pSommet[sommet];
+    Sommet->tagged = true;
 
     pArc Arccourant = Sommet->arc;
 
-    /*while (Arccourant != NULL) {
-        if(pGraphe->pSommet[Arccourant->sommet] != true){
-            enfiler(*F, Arccourant->sommet);
+    while (Arccourant != NULL) {
+        int voisin = Arccourant->sommet;
+        if (!pGraphe->pSommet[voisin]->tagged) {
+            enfiler(*F, voisin);
+            DFS(pGraphe, voisin, ++etape, F);
         }
-        sommetdecouvert[Arccourant->sommet] = true;
         Arccourant = Arccourant->arc_suivant;
-    }*/
-}
+    }
+}*/
 
 
 

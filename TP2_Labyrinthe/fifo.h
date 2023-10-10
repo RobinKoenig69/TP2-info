@@ -22,3 +22,5 @@ typage tete(File F);
 void defiler(File F);
 typage defilement(File F);
 void ecrireFile(File F);
+typage defilerDernier(File F);
+typage dernierElement(File F);
