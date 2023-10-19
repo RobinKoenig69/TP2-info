@@ -16,12 +16,13 @@ void afficher_successeurs(pSommet * sommet, int num)
     }
 }
 
-pSommet* CreerArete(pSommet* sommet,int s1,int s2)
+pSommet* CreerArete(pSommet* sommet,int s1,int s2, int poids)
 {
     if(sommet[s1]->arc==NULL)
     {
         pArc Newarc=(pArc)malloc(sizeof(struct Arc));
         Newarc->sommet=s2;
+        Newarc->poids = poids;
         Newarc->arc_suivant=NULL;
         sommet[s1]->arc=Newarc;
         return sommet;
@@ -43,6 +44,7 @@ pSommet* CreerArete(pSommet* sommet,int s1,int s2)
             Newarc->arc_suivant=temp->arc_suivant;
             Newarc->sommet=temp->sommet;
             temp->sommet=s2;
+            temp->poids = poids;
             temp->arc_suivant=Newarc;
             return sommet;
         }
@@ -97,10 +99,10 @@ Graphe * lire_graphe(char * nomFichier)
     for (int i=0; i<taille; ++i)
     {
         fscanf(ifs,"%d%d",&s1,&s2);
-        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2);
+        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2, 0);
 
         if(!orientation)
-            graphe->pSommet=CreerArete(graphe->pSommet, s2, s1);
+            graphe->pSommet=CreerArete(graphe->pSommet, s2, s1, 0);
     }
 
     return graphe;
@@ -116,7 +118,7 @@ Graphe * lire_graphe_TP3(char * nomFichier)
 
     if (!ifs)
     {
-        printf("Erreur de lecture fichier\n");
+        printf("Erreur de lecture fichier \n");
         exit(-1);
     }
 
@@ -124,7 +126,7 @@ Graphe * lire_graphe_TP3(char * nomFichier)
 
     graphe=CreerGraphe(ordre); // créer le graphe d'ordre sommets
 
-    for (int i = 0; i< ordre; i++){
+    for (int i = 0; i< ordre; ++i){
         fscanf(ifs, "%d", &valeursommetactuel);
         graphe->pSommet[i]->valeur = valeursommetactuel;
 
@@ -134,6 +136,8 @@ Graphe * lire_graphe_TP3(char * nomFichier)
 
     fscanf(ifs,"%d",&taille);
 
+    graphe->orientation = 0;
+
 
     graphe->ordre=ordre;
     graphe->taille = taille;
@@ -142,19 +146,19 @@ Graphe * lire_graphe_TP3(char * nomFichier)
     for (int i=0; i<taille; ++i)
     {
         fscanf(ifs,"%d%d",&s1,&s2);
-        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2);
-
-        if(!orientation)
-            graphe->pSommet=CreerArete(graphe->pSommet, s2, s1);
-
         fscanf(ifs,"%d",&poidsarc);
-        graphe->pSommet[i]->arc->poids = poidsarc;
+        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2, poidsarc);
+
+        printf("%d \n", poidsarc);
+
+        if(!orientation) {
+            graphe->pSommet = CreerArete(graphe->pSommet, s2, s1, poidsarc);
+        }
     }
-
-
 
     return graphe;
 }
+
 
 /*affichage du graphe avec les successeurs de chaque sommet */
 void graphe_afficher(Graphe* graphe)
@@ -334,7 +338,7 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
     }
 }
 
-void Dijkstra(Graphe * pGraphe, int sommetinit, int etapearc){
+void Dijkstra(Graphe * pGraphe, int sommetinit){
     if (pGraphe == NULL) {
         fprintf(stderr, "erreur - le graphe n'existe pas");
         exit(0);
@@ -344,9 +348,11 @@ void Dijkstra(Graphe * pGraphe, int sommetinit, int etapearc){
     int pppoids = 0;
     int sommetpppoids;
     int etapedijkstra = 0;
+    int etapearc = 0;
 
     sommetactuel = sommetinit;
-    pArc Arcsuivant = pGraphe->pSommet[sommetactuel]->arc;      //définit arcsuivant comme étant le premier arc sortant d'un sommet
+
+    pArc Arcsuivant = pGraphe->pSommet[sommetactuel]->arc;      // définit arcsuivant comme étant le premier arc sortant d'un sommet
 
     if (etapearc == 0){
         pGraphe->pSommet[sommetinit]->tagged = 1;
@@ -355,12 +361,18 @@ void Dijkstra(Graphe * pGraphe, int sommetinit, int etapearc){
 
     while (etapedijkstra != pGraphe->ordre){
 
-        while (!Arcsuivant){
+        while (Arcsuivant != NULL){
 
-            pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
+            if (pGraphe->pSommet[Arcsuivant->sommet]->distance == -1){
+                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
+            }
+            else if (pGraphe->pSommet[Arcsuivant->sommet]->distance > Arcsuivant->poids + pppoids){      //on vérifie que la nouvelle distance est plus courte
+                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
+            }
 
             if (etapearc == 0){
                 pppoids = Arcsuivant->poids;
+
                 etapearc++;                                      //etapearc correspond a l'arc sortant sur lequel on se trouve
             }
             else if(Arcsuivant->poids < pppoids){
@@ -375,12 +387,23 @@ void Dijkstra(Graphe * pGraphe, int sommetinit, int etapearc){
         Arcsuivant = pGraphe->pSommet[sommetpppoids]->arc;        // on prend comme nouvel arc l'arc sortant du sommet de plus petite distance
         pGraphe->pSommet[sommetpppoids]->tagged = 1;
         etapedijkstra++;
+
+        //printf("%d \n", pppoids);
+        printf("%d \n", etapedijkstra);
+        printf("%d \n", etapearc);
+
+    }
+
+    for (int j = 0; j < pGraphe->ordre; j++){
+        printf("La distance au sommet %d vaut : \n", j);
+        printf("%d", pGraphe->pSommet[j]->distance);
     }
 }
 
 int main()
 {
     Graphe * g;
+    Graphe * dijkstra;
 
     int sommetdepart;
 
@@ -393,17 +416,26 @@ int main()
     printf("entrer le nom du fichier du labyrinthe:");
     gets(nom_fichier);
 
-    g = lire_graphe(nom_fichier);
+    //g = lire_graphe(nom_fichier);
 
-    for (int i=0; i<g->ordre; i++){       //on initalise la découverte des sommets pour le DFS (l'téta est stocké dans la structure des sommets
+
+    /*for (int i=0; i<g->ordre; i++){       //on initalise la découverte des sommets pour le DFS (l'téta est stocké dans la structure des sommets
         g->pSommet[i]->tagged = false;
-    }
+    }*/
+
+    dijkstra = lire_graphe_TP3(nom_fichier);
 
     ///saisie du numéro du sommet initial pour lancer un BFS puis un DSF
     printf("quel est le sommet initial");
     scanf("%d",&sommetdepart);
 
-    BFS(g, sommetdepart,&fileattenteBFS);
+    printf("%d", sommetdepart);
+
+    //Dijkstra(dijkstra, sommetdepart);
+
+    printf("%d", dijkstra->pSommet[8]->arc->poids);
+
+    //BFS(g, sommetdepart,&fileattenteBFS);
 
     //DFS(g, sommetdepart, etape, &fileattenteDFS);
 

@@ -49,7 +49,7 @@ Le fichier contient : ordre, taille,orientation (0 ou 1)et liste des arcs */
 Graphe * lire_graphe(char * nomFichier);
 
 // Ajouter l'arête entre les sommets s1 et s2 du graphe
-pSommet* CreerArete(pSommet* sommet,int s1,int s2);
+pSommet* CreerArete(pSommet* sommet,int s1,int s2, int poids);
 
 /* affichage des successeurs du sommet num*/
 void afficher_successeurs(pSommet * sommet, int num);
