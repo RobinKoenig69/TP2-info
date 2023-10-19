@@ -66,7 +66,6 @@ Graphe* CreerGraphe(int ordre)
     return Newgraphe;
 }
 
-
 /* La construction du réseau peut se faire à partir d'un fichier dont le nom est passé en paramètre
 Le fichier contient : ordre, taille,orientation (0 ou 1)et liste des arcs */
 Graphe * lire_graphe(char * nomFichier)
@@ -103,6 +102,56 @@ Graphe * lire_graphe(char * nomFichier)
         if(!orientation)
             graphe->pSommet=CreerArete(graphe->pSommet, s2, s1);
     }
+
+    return graphe;
+}
+
+Graphe * lire_graphe_TP3(char * nomFichier)
+{
+    Graphe* graphe;
+    FILE * ifs = fopen(nomFichier,"r");
+    int taille, orientation, ordre, s1, s2, valeursommetactuel, poidsarc;
+
+    printf("%s \n", nomFichier);
+
+    if (!ifs)
+    {
+        printf("Erreur de lecture fichier\n");
+        exit(-1);
+    }
+
+    fscanf(ifs,"%d",&ordre);
+
+    graphe=CreerGraphe(ordre); // créer le graphe d'ordre sommets
+
+    for (int i = 0; i< ordre; i++){
+        fscanf(ifs, "%d", &valeursommetactuel);
+        graphe->pSommet[i]->valeur = valeursommetactuel;
+
+        graphe->pSommet[i]->tagged = 0;
+        graphe->pSommet[i]->distance = -1; //-1 dans le code équivaut a l'infini sur le papier
+    }
+
+    fscanf(ifs,"%d",&taille);
+
+
+    graphe->ordre=ordre;
+    graphe->taille = taille;
+
+    // créer les arêtes du graphe
+    for (int i=0; i<taille; ++i)
+    {
+        fscanf(ifs,"%d%d",&s1,&s2);
+        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2);
+
+        if(!orientation)
+            graphe->pSommet=CreerArete(graphe->pSommet, s2, s1);
+
+        fscanf(ifs,"%d",&poidsarc);
+        graphe->pSommet[i]->arc->poids = poidsarc;
+    }
+
+
 
     return graphe;
 }
@@ -285,6 +334,50 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
     }
 }
 
+void Dijkstra(Graphe * pGraphe, int sommetinit, int etapearc){
+    if (pGraphe == NULL) {
+        fprintf(stderr, "erreur - le graphe n'existe pas");
+        exit(0);
+    }
+
+    int sommetactuel;
+    int pppoids = 0;
+    int sommetpppoids;
+    int etapedijkstra = 0;
+
+    sommetactuel = sommetinit;
+    pArc Arcsuivant = pGraphe->pSommet[sommetactuel]->arc;      //définit arcsuivant comme étant le premier arc sortant d'un sommet
+
+    if (etapearc == 0){
+        pGraphe->pSommet[sommetinit]->tagged = 1;
+        pGraphe->pSommet[sommetinit]->distance = 0;
+    }                                                           // on initialise pour le premier sommet
+
+    while (etapedijkstra != pGraphe->ordre){
+
+        while (!Arcsuivant){
+
+            pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
+
+            if (etapearc == 0){
+                pppoids = Arcsuivant->poids;
+                etapearc++;                                      //etapearc correspond a l'arc sortant sur lequel on se trouve
+            }
+            else if(Arcsuivant->poids < pppoids){
+                pppoids = Arcsuivant->poids;
+                sommetpppoids = Arcsuivant->sommet;
+                etapearc++;
+            }
+
+            Arcsuivant = Arcsuivant->arc_suivant;                  // on se place sur l'arrête suivante
+        }
+
+        Arcsuivant = pGraphe->pSommet[sommetpppoids]->arc;        // on prend comme nouvel arc l'arc sortant du sommet de plus petite distance
+        pGraphe->pSommet[sommetpppoids]->tagged = 1;
+        etapedijkstra++;
+    }
+}
+
 int main()
 {
     Graphe * g;
@@ -310,11 +403,11 @@ int main()
     printf("quel est le sommet initial");
     scanf("%d",&sommetdepart);
 
-    //BFS(g, sommetdepart,&fileattenteBFS);
+    BFS(g, sommetdepart,&fileattenteBFS);
 
     //DFS(g, sommetdepart, etape, &fileattenteDFS);
 
-    afficher_composantes_connexes(g);
+    //afficher_composantes_connexes(g);
 
     /// afficher le graphe
     //graphe_afficher(g);

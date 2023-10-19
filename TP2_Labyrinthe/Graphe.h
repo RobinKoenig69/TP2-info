@@ -11,6 +11,7 @@ struct Arc
 {
     int sommet; // numéro de sommet d'un arc adjacent au sommet initial
     int valeur;
+    int poids;
     struct Arc* arc_suivant;
 };
 
@@ -24,6 +25,7 @@ struct Sommet
     int valeur;
     char couleur;
     int tagged;
+    int distance;
 };
 
 /* Alias de pointeur sur un Sommet */
