@@ -1,4 +1,5 @@
 
+#include <limits.h>
 #include "Graphe.h"
 #include "fifo.h"
 
@@ -51,7 +52,6 @@ pSommet* CreerArete(pSommet* sommet,int s1,int s2, int poids)
             temp->arc_suivant=Newarc;
             return sommet;
         }
-
 
         temp->arc_suivant=Newarc;
         return sommet;
@@ -135,7 +135,7 @@ Graphe * lire_graphe_TP3(char * nomFichier)
         graphe->pSommet[i]->valeur = valeursommetactuel;
 
         graphe->pSommet[i]->tagged = 0;
-        graphe->pSommet[i]->distance = -1; //-1 dans le code équivaut a l'infini sur le papier
+        graphe->pSommet[i]->distance = INT_MAX - 1; //-1 dans le code équivaut a l'infini sur le papier
     }
 
     fscanf(ifs,"%d",&taille);
@@ -152,13 +152,6 @@ Graphe * lire_graphe_TP3(char * nomFichier)
         fscanf(ifs,"%d",&poidsarc);
         graphe->pSommet = CreerArete(graphe->pSommet, s1, s2, poidsarc);
         graphe->pSommet = CreerArete(graphe->pSommet, s2, s1, poidsarc);
-    }
-
-    pArc Arccourant = graphe->pSommet[8]->arc;
-
-    while (Arccourant != NULL){
-        printf("%d \n", Arccourant->poids);
-        Arccourant = Arccourant->arc_suivant;
     }
 
     return graphe;
@@ -345,72 +338,118 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
     }
 }
 
-void Dijkstra(Graphe * pGraphe, int sommetinit){
+int cmpfunc (const void * a, const void * b) {      //fonction permettant de trier les sommets https://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
+    return ( *(int*)a - *(int*)b );
+}
+
+/*void Dijkstra(Graphe *pGraphe, int sommetdepart) {
     if (pGraphe == NULL) {
         fprintf(stderr, "erreur - le graphe n'existe pas");
         exit(0);
     }
 
-    int sommetactuel;
-    int pppoids = 0;
-    int sommetpppoids;
-    int etapedijkstra = 0;
-    int etapearc = 0;
+    int pluspetitedistance = INT_MAX;
+    int distanceadditioncalcul = 0;
+    int etapedijkstra =0;
 
-    sommetactuel = sommetinit;
+    pGraphe->pSommet[sommetdepart]->distance = 0;
+    pGraphe->pSommet[sommetdepart]->tagged = 1;
 
-    pArc Arcsuivant = pGraphe->pSommet[sommetactuel]->arc;      // définit arcsuivant comme étant le premier arc sortant d'un sommet
+    pArc Arcsuivant = pGraphe->pSommet[sommetdepart]->arc;
 
-    if (etapearc == 0){
-        pGraphe->pSommet[sommetinit]->tagged = 1;
-        pGraphe->pSommet[sommetinit]->distance = 0;
-    }                                                           // on initialise pour le premier sommet
+    while (1){
 
-    while (Arcsuivant != NULL){
-        printf("%d \n", Arcsuivant->valeur);
-        Arcsuivant = Arcsuivant->arc_suivant;
-    }
-
-
-    while (etapedijkstra != pGraphe->ordre){
-
-        while (Arcsuivant != NULL){
-
-            if (pGraphe->pSommet[Arcsuivant->sommet]->distance == -1){
-                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
-            }
-            else if (pGraphe->pSommet[Arcsuivant->sommet]->distance > Arcsuivant->poids + pppoids){      //on vérifie que la nouvelle distance est plus courte
-                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + pppoids;
+        while(Arcsuivant != NULL){
+            if (pGraphe->pSommet[Arcsuivant->sommet]->distance > Arcsuivant->poids + distanceadditioncalcul){
+                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + distanceadditioncalcul;
+                printf("%d \n", pGraphe->pSommet[Arcsuivant->sommet]->distance);
             }
 
-            if (etapearc == 0){
-                pppoids = Arcsuivant->poids;
-
-                etapearc++;                                      //etapearc correspond a l'arc sortant sur lequel on se trouve
-            }
-            else if(Arcsuivant->poids < pppoids){
-                pppoids = Arcsuivant->poids;
-                sommetpppoids = Arcsuivant->sommet;
-                printf("%d sommet de plus petit poids \n", sommetpppoids);
-                printf("%d plus petit poids \n", pppoids);
-                etapearc++;
-            }
-
-            Arcsuivant = Arcsuivant->arc_suivant;                  // on se place sur l'arrête suivante
+            Arcsuivant = Arcsuivant->arc_suivant;
         }
 
-        Arcsuivant = pGraphe->pSommet[sommetpppoids]->arc;        // on prend comme nouvel arc l'arc sortant du sommet de plus petite distance
-        pGraphe->pSommet[sommetpppoids]->tagged = 1;
-        etapedijkstra++;
+        for (int i = 0; i<pGraphe->ordre; i++){
+            if (pGraphe->pSommet[i]->tagged == 0 && pGraphe->pSommet[i]->distance < pluspetitedistance){
+                Arcsuivant = pGraphe->pSommet[i]->arc;
+                pluspetitedistance = pGraphe->pSommet[i]->distance;
 
-        //printf("%d \n", pppoids);
+                printf("plus petite distance :%d \n", pluspetitedistance);
+                printf("%d \n", i);
+
+                distanceadditioncalcul = pluspetitedistance;
+                pGraphe->pSommet[i]->tagged = 1;
+            }
+        }
+
+        if(etapedijkstra == pGraphe->ordre){
+            break;
+        }
+
+        etapedijkstra++;
     }
 
-    /*for (int j = 0; j < pGraphe->ordre; j++){
-        printf("La distance au sommet %d vaut : \n", j);
-        printf("%d", pGraphe->pSommet[j]->distance);
-    }*/
+    for (int i=0; i<pGraphe->ordre; i++){
+        printf("La distance du sommet %d vaut %d \n", i, pGraphe->pSommet[0]->distance);
+    }
+
+
+    printf("fin de Dijkstra");
+}*/
+
+void Dijkstra(Graphe *pGraphe, int sommetdepart) {
+    if (pGraphe == NULL) {
+        fprintf(stderr, "Erreur - le graphe n'existe pas\n");
+        exit(1);
+    }
+
+    int etapedijkstra = 0;
+
+    for (int i = 0; i < pGraphe->ordre; i++) {
+        pGraphe->pSommet[i]->distance = INT_MAX;
+        pGraphe->pSommet[i]->tagged = 0;
+    }
+
+    pGraphe->pSommet[sommetdepart]->distance = 0;
+
+    while (etapedijkstra < pGraphe->ordre) {
+        int sommetcourant = -1;
+        int distance_minimale = INT_MAX;
+
+        for (int i = 0; i < pGraphe->ordre; i++) {
+            if (!pGraphe->pSommet[i]->tagged && pGraphe->pSommet[i]->distance < distance_minimale) {
+                sommetcourant = i;
+                distance_minimale = pGraphe->pSommet[i]->distance;
+            }
+        }
+
+        if (sommetcourant == -1) {
+            break; // Tous les sommets inaccessibles ont été visités
+        }
+
+        pGraphe->pSommet[sommetcourant]->tagged = 1;
+
+        pArc Arcsuivant = pGraphe->pSommet[sommetcourant]->arc;
+
+        while (Arcsuivant != NULL) {
+            int next = Arcsuivant->sommet;
+            int poids = Arcsuivant->poids;
+
+            if (!pGraphe->pSommet[next]->tagged && pGraphe->pSommet[sommetcourant]->distance + poids < pGraphe->pSommet[next]->distance) {
+                pGraphe->pSommet[next]->distance = pGraphe->pSommet[sommetcourant]->distance + poids;
+            }
+
+            Arcsuivant = Arcsuivant->arc_suivant;
+        }
+
+        etapedijkstra++;
+    }
+
+    printf("pGraphe->pSommet minimales depuis le sommet %d :\n", sommetdepart);
+    for (int i = 0; i < pGraphe->ordre; i++) {
+        printf("Sommet %d : Distance = %d\n", i, pGraphe->pSommet[i]->distance);
+    }
 }
+
 
 
 int main()
@@ -426,7 +465,7 @@ int main()
     File fileattenteDFS = fileVide();     //DFS
     char nom_fichier[50];
 
-    printf("entrer le nom du fichier du labyrinthe:");
+    printf("entrer le nom du fichier du labyrinthe: ");
     gets(nom_fichier);
 
     //g = lire_graphe(nom_fichier);
@@ -439,12 +478,12 @@ int main()
     dijkstra = lire_graphe_TP3(nom_fichier);
 
     ///saisie du numéro du sommet initial pour lancer un BFS puis un DSF
-    printf("quel est le sommet initial");
+    printf("quel est le sommet initial ");
     scanf("%d",&sommetdepart);
 
-    printf("%d \n", sommetdepart);
+    //printf("%d \n", sommetdepart);
 
-    //Dijkstra(dijkstra, sommetdepart);
+    Dijkstra(dijkstra, sommetdepart);
 
 
     //BFS(g, sommetdepart,&fileattenteBFS);

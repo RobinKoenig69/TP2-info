@@ -26,6 +26,7 @@ struct Sommet
     char couleur;
     int tagged;
     int distance;
+    int poids;
 };
 
 /* Alias de pointeur sur un Sommet */
