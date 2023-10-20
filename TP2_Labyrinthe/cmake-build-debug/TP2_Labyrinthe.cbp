@@ -8,87 +8,85 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="TP2_Labyrinthe">
-				<Option output="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/TP2_Labyrinthe.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
+				<Option output="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/TP2_Labyrinthe.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 TP2_Labyrinthe"/>
-					<CompileFile command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 TP2_Labyrinthe"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="TP2_Labyrinthe/fast">
-				<Option output="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/TP2_Labyrinthe.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
+				<Option output="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/TP2_Labyrinthe.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 TP2_Labyrinthe/fast"/>
-					<CompileFile command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 TP2_Labyrinthe/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
+				<Option working_dir="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/Users/DB9ga/AppData/Local/Programs/CLion/bin/mingw/bin/mingw32-make.exe -f &quot;C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/Graphe.h">
+		<Unit filename="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/Graphe.h">
 			<Option target="TP2_Labyrinthe"/>
 		</Unit>
-		<Unit filename="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/fifo.c">
+		<Unit filename="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/fifo.c">
 			<Option target="TP2_Labyrinthe"/>
 		</Unit>
-		<Unit filename="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/fifo.h">
+		<Unit filename="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/fifo.h">
 			<Option target="TP2_Labyrinthe"/>
 		</Unit>
-		<Unit filename="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/main.c">
+		<Unit filename="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/main.c">
 			<Option target="TP2_Labyrinthe"/>
 		</Unit>
-		<Unit filename="C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/CMakeLists.txt">
+		<Unit filename="C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

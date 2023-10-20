@@ -22,8 +22,8 @@ pSommet* CreerArete(pSommet* sommet,int s1,int s2, int poids)
     {
         pArc Newarc=(pArc)malloc(sizeof(struct Arc));
         Newarc->sommet=s2;
-        Newarc->poids = poids;
         Newarc->arc_suivant=NULL;
+        Newarc->poids = poids;
         sommet[s1]->arc=Newarc;
         return sommet;
     }
@@ -37,17 +37,21 @@ pSommet* CreerArete(pSommet* sommet,int s1,int s2, int poids)
         }
         pArc Newarc=(pArc)malloc(sizeof(struct Arc));
         Newarc->sommet=s2;
+
+
         Newarc->arc_suivant=NULL;
+        Newarc->poids = poids;
 
         if(temp->sommet>s2)
         {
             Newarc->arc_suivant=temp->arc_suivant;
             Newarc->sommet=temp->sommet;
+
             temp->sommet=s2;
-            temp->poids = poids;
             temp->arc_suivant=Newarc;
             return sommet;
         }
+
 
         temp->arc_suivant=Newarc;
         return sommet;
@@ -137,23 +141,24 @@ Graphe * lire_graphe_TP3(char * nomFichier)
     fscanf(ifs,"%d",&taille);
 
     graphe->orientation = 0;
-
-
     graphe->ordre=ordre;
     graphe->taille = taille;
 
+
     // créer les arêtes du graphe
-    for (int i=0; i<taille; ++i)
+    for (int i=0; i<taille; i++)
     {
         fscanf(ifs,"%d%d",&s1,&s2);
         fscanf(ifs,"%d",&poidsarc);
-        graphe->pSommet=CreerArete(graphe->pSommet, s1, s2, poidsarc);
+        graphe->pSommet = CreerArete(graphe->pSommet, s1, s2, poidsarc);
+        graphe->pSommet = CreerArete(graphe->pSommet, s2, s1, poidsarc);
+    }
 
-        printf("%d \n", poidsarc);
+    pArc Arccourant = graphe->pSommet[8]->arc;
 
-        if(!orientation) {
-            graphe->pSommet = CreerArete(graphe->pSommet, s2, s1, poidsarc);
-        }
+    while (Arccourant != NULL){
+        printf("%d \n", Arccourant->poids);
+        Arccourant = Arccourant->arc_suivant;
     }
 
     return graphe;
@@ -260,7 +265,6 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
             pGraphe->pSommet[Arccourant->sommet]->tagged = true;
         }
         Arccourant = Arccourant->arc_suivant;
-        //ecrireFile(*F);
     }
 
     etape++;
@@ -334,7 +338,10 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
             File = fileVide();
             printf("\n");
             etape++;
+            sommet = 0;
         }
+
+        printf("%d",pGraphe->pSommet[7]->tagged);
     }
 }
 
@@ -359,6 +366,12 @@ void Dijkstra(Graphe * pGraphe, int sommetinit){
         pGraphe->pSommet[sommetinit]->distance = 0;
     }                                                           // on initialise pour le premier sommet
 
+    while (Arcsuivant != NULL){
+        printf("%d \n", Arcsuivant->valeur);
+        Arcsuivant = Arcsuivant->arc_suivant;
+    }
+
+
     while (etapedijkstra != pGraphe->ordre){
 
         while (Arcsuivant != NULL){
@@ -378,6 +391,8 @@ void Dijkstra(Graphe * pGraphe, int sommetinit){
             else if(Arcsuivant->poids < pppoids){
                 pppoids = Arcsuivant->poids;
                 sommetpppoids = Arcsuivant->sommet;
+                printf("%d sommet de plus petit poids \n", sommetpppoids);
+                printf("%d plus petit poids \n", pppoids);
                 etapearc++;
             }
 
@@ -389,16 +404,14 @@ void Dijkstra(Graphe * pGraphe, int sommetinit){
         etapedijkstra++;
 
         //printf("%d \n", pppoids);
-        printf("%d \n", etapedijkstra);
-        printf("%d \n", etapearc);
-
     }
 
-    for (int j = 0; j < pGraphe->ordre; j++){
+    /*for (int j = 0; j < pGraphe->ordre; j++){
         printf("La distance au sommet %d vaut : \n", j);
         printf("%d", pGraphe->pSommet[j]->distance);
-    }
+    }*/
 }
+
 
 int main()
 {
@@ -429,11 +442,10 @@ int main()
     printf("quel est le sommet initial");
     scanf("%d",&sommetdepart);
 
-    printf("%d", sommetdepart);
+    printf("%d \n", sommetdepart);
 
     //Dijkstra(dijkstra, sommetdepart);
 
-    printf("%d", dijkstra->pSommet[8]->arc->poids);
 
     //BFS(g, sommetdepart,&fileattenteBFS);
 
