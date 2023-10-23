@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe/cmake-build-debug",
-		"source" : "C:/Users/Robin/CLionProjects/TP2-info/TP2_Labyrinthe"
+		"build" : "C:/ECOLE/Informatique/TP sem 3/TP3/TP2_Labyrinthe/cmake-build-debug",
+		"source" : "C:/ECOLE/Informatique/TP sem 3/TP3/TP2_Labyrinthe"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 5
 	}
 }

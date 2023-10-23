@@ -338,63 +338,6 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
     }
 }
 
-int cmpfunc (const void * a, const void * b) {      //fonction permettant de trier les sommets https://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
-    return ( *(int*)a - *(int*)b );
-}
-
-/*void Dijkstra(Graphe *pGraphe, int sommetdepart) {
-    if (pGraphe == NULL) {
-        fprintf(stderr, "erreur - le graphe n'existe pas");
-        exit(0);
-    }
-
-    int pluspetitedistance = INT_MAX;
-    int distanceadditioncalcul = 0;
-    int etapedijkstra =0;
-
-    pGraphe->pSommet[sommetdepart]->distance = 0;
-    pGraphe->pSommet[sommetdepart]->tagged = 1;
-
-    pArc Arcsuivant = pGraphe->pSommet[sommetdepart]->arc;
-
-    while (1){
-
-        while(Arcsuivant != NULL){
-            if (pGraphe->pSommet[Arcsuivant->sommet]->distance > Arcsuivant->poids + distanceadditioncalcul){
-                pGraphe->pSommet[Arcsuivant->sommet]->distance = Arcsuivant->poids + distanceadditioncalcul;
-                printf("%d \n", pGraphe->pSommet[Arcsuivant->sommet]->distance);
-            }
-
-            Arcsuivant = Arcsuivant->arc_suivant;
-        }
-
-        for (int i = 0; i<pGraphe->ordre; i++){
-            if (pGraphe->pSommet[i]->tagged == 0 && pGraphe->pSommet[i]->distance < pluspetitedistance){
-                Arcsuivant = pGraphe->pSommet[i]->arc;
-                pluspetitedistance = pGraphe->pSommet[i]->distance;
-
-                printf("plus petite distance :%d \n", pluspetitedistance);
-                printf("%d \n", i);
-
-                distanceadditioncalcul = pluspetitedistance;
-                pGraphe->pSommet[i]->tagged = 1;
-            }
-        }
-
-        if(etapedijkstra == pGraphe->ordre){
-            break;
-        }
-
-        etapedijkstra++;
-    }
-
-    for (int i=0; i<pGraphe->ordre; i++){
-        printf("La distance du sommet %d vaut %d \n", i, pGraphe->pSommet[0]->distance);
-    }
-
-
-    printf("fin de Dijkstra");
-}*/
 
 void Dijkstra(Graphe *pGraphe, int sommetdepart) {
     if (pGraphe == NULL) {

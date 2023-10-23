@@ -39,7 +39,13 @@ typedef struct Graphe
     int orientation;
     int ordre;
     pSommet* pSommet;
-} Graphe;
+} Graphe, *pGraphe;
+
+
+typedef struct Maillon{
+    int numero;
+    struct Maillon* Maillonnext;
+}Maillon, *pMaillon;
 
 
 // créer le graphe
