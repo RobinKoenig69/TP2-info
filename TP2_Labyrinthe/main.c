@@ -339,6 +339,7 @@ void afficher_composantes_connexes(Graphe *pGraphe) {
 }
 
 
+
 void Dijkstra(Graphe *pGraphe, int sommetdepart) {
     if (pGraphe == NULL) {
         fprintf(stderr, "Erreur - le graphe n'existe pas\n");
