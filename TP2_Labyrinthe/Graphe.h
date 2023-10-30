@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include "stdbool.h"
 
+typedef struct {
+    int sommet1;
+    int sommet2;
+
+    int poids;
+}Kruskal, *pKruskal;
+
 
 /* Structure d'un arc*/
 struct Arc
@@ -38,6 +45,8 @@ typedef struct Graphe
     int taille;
     int orientation;
     int ordre;
+    int *poidsKruskal;
+    pKruskal tableaukruskal;
     pSommet* pSommet;
 } Graphe, *pGraphe;
 

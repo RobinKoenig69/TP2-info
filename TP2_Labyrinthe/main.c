@@ -3,6 +3,10 @@
 #include "Graphe.h"
 #include "fifo.h"
 
+int cmpfunc (const void * a, const void * b) {              //source : https://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
+    return ( *(int*)a - *(int*)b );
+}
+
 /* affichage des successeurs du sommet num*/
 void afficher_successeurs(pSommet * sommet, int num)
 {
@@ -97,7 +101,7 @@ Graphe * lire_graphe(char * nomFichier)
 
     graphe->orientation=orientation;
     graphe->ordre=ordre;
-    graphe->taille = taille;                                            //modif mais pas sur
+    graphe->taille = taille;
 
     // créer les arêtes du graphe
     for (int i=0; i<taille; ++i)
@@ -144,15 +148,27 @@ Graphe * lire_graphe_TP3(char * nomFichier)
     graphe->ordre=ordre;
     graphe->taille = taille;
 
+    graphe->poidsKruskal = malloc(taille * sizeof (int));           //on fait une allocation de la mémoire qui va permettre de stocker les poids par ordre croissant
+    graphe->tableaukruskal = malloc(taille*sizeof (Kruskal));
+
 
     // créer les arêtes du graphe
     for (int i=0; i<taille; i++)
     {
         fscanf(ifs,"%d%d",&s1,&s2);
         fscanf(ifs,"%d",&poidsarc);
+
+        graphe->poidsKruskal[i] = poidsarc;
+
+        graphe->tableaukruskal[i].sommet1 =s1;
+        graphe->tableaukruskal[i].sommet2 =s2;
+        graphe->tableaukruskal[i].poids = poidsarc;
+
         graphe->pSommet = CreerArete(graphe->pSommet, s1, s2, poidsarc);
         graphe->pSommet = CreerArete(graphe->pSommet, s2, s1, poidsarc);
     }
+
+    qsort(graphe->poidsKruskal, graphe->taille, sizeof(int), cmpfunc);      // on trie les poids dans l'ordre croissant
 
     return graphe;
 }
@@ -394,6 +410,31 @@ void Dijkstra(Graphe *pGraphe, int sommetdepart) {
     }
 }
 
+void Kruskal_fct(Graphe* pGraphe){
+    if (pGraphe == NULL) {
+        fprintf(stderr, "Erreur - le graphe n'existe pas\n");
+        exit(1);
+    }
+
+    int sommet1, sommet2;               //on définit les deux sommets de départ et d'arrivée de l'arc courant
+    pSommet Sommet1, Sommet2;           // on définit les deux sommets équivalents a leurs numéros (strucutre)
+
+
+    int pppoids = pGraphe->poidsKruskal[0];         // on récupère le plus petit poids dans le tableau du graphe
+
+    int i =0;
+
+    pGraphe->poidsKruskal[0] = INT_MAX;             // on passe la plus petite distance à int max pour ne pas s'en resservir par la suite
+
+    while (pGraphe->tableaukruskal[i].poids != pppoids){
+        i++;
+    }
+
+    sommet1 = pGraphe->tableaukruskal[i].sommet1;
+    sommet2 = pGraphe->tableaukruskal[i].sommet2;
+
+
+}
 
 
 int main()

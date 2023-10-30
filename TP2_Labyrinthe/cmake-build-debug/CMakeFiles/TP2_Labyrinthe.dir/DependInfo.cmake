@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/ECOLE/Informatique/TP sem 3/TP3/TP2_Labyrinthe/fifo.c" "CMakeFiles/TP2_Labyrinthe.dir/fifo.c.obj" "gcc" "CMakeFiles/TP2_Labyrinthe.dir/fifo.c.obj.d"
-  "C:/ECOLE/Informatique/TP sem 3/TP3/TP2_Labyrinthe/main.c" "CMakeFiles/TP2_Labyrinthe.dir/main.c.obj" "gcc" "CMakeFiles/TP2_Labyrinthe.dir/main.c.obj.d"
+  "C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/fifo.c" "CMakeFiles/TP2_Labyrinthe.dir/fifo.c.obj" "gcc" "CMakeFiles/TP2_Labyrinthe.dir/fifo.c.obj.d"
+  "C:/Users/DB9ga/CLionProjects/TP2-info/TP2_Labyrinthe/main.c" "CMakeFiles/TP2_Labyrinthe.dir/main.c.obj" "gcc" "CMakeFiles/TP2_Labyrinthe.dir/main.c.obj.d"
   )
 
-# Targets to which this target links which contain Fortran sources.
-set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
   )
 
 # Fortran module output directory.
