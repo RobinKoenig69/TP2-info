@@ -113,6 +113,10 @@ Graphe * lire_graphe(char * nomFichier)
             graphe->pSommet=CreerArete(graphe->pSommet, s2, s1, 0);
     }
 
+    for (int i =0; i<ordre; i++){
+        graphe->pSommet[i]->tagged = false;
+    }
+
     return graphe;
 }
 
@@ -274,6 +278,7 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
             pGraphe->pSommet[Arccourant->sommet]->tagged = true;
         }
         Arccourant = Arccourant->arc_suivant;
+        //ecrireFile(*F);
     }
 
     etape++;
@@ -290,6 +295,8 @@ void DFS(Graphe *pGraphe, int sommetinit, int etape, File* F){
         return;
     }
 }
+
+
 
 void DFSconnexite(Graphe *pGraphe, int sommetinit, int etape, File* F, File* File){
     if (pGraphe == NULL) {
@@ -417,8 +424,6 @@ void Kruskal_fct(Graphe* pGraphe){
         exit(1);
     }
 
-
-
     int sommet1, sommet2;               //on définit les deux sommets de départ et d'arrivée de l'arc courant
     pSommet Sommet1, Sommet2;           // on définit les deux sommets équivalents a leurs numéros (strucutre)
 
@@ -428,6 +433,7 @@ void Kruskal_fct(Graphe* pGraphe){
     int etape = 0;
     int currenttagged = 1;
 
+    int sommepoids = 0;
 
 
     while (etape !=pGraphe->taille){
@@ -447,31 +453,61 @@ void Kruskal_fct(Graphe* pGraphe){
         Sommet1 = pGraphe->pSommet[sommet1];
         Sommet2 = pGraphe->pSommet[sommet2];
 
+
+
         if (etape == 0){
             Sommet1->tagged = currenttagged;            // on tag les sommets à 0
             Sommet2->tagged = currenttagged;
 
-            printf("on tag les sommets de depart");
+            printf("on tag les sommets de depart \n");
+            sommepoids += pppoids;
+
         }
         else{
             if(Sommet1->tagged != 0 && Sommet2->tagged == 0){
                 Sommet2->tagged = 1;
-                printf("Sommet %d a ete tag \n", Sommet2->valeur);
+                //printf("Sommet %d a ete tag \n", Sommet2->valeur);
+
+                //printf("%d", Sommet2->distance);
+
+                sommepoids += pppoids;
             }
-            if(Sommet2->tagged != 0 && Sommet1->tagged == 0){
+            else if(Sommet2->tagged != 0 && Sommet1->tagged == 0){
                 Sommet1->tagged = 1;
-                printf("Sommet %d a ete tag \n", Sommet1->valeur);
+                //printf("Sommet %d a ete tag \n", Sommet1->valeur);
+
+                sommepoids += pppoids;
             }
-            if (Sommet2->tagged == 0 && Sommet1->tagged == 0){
+            else if(Sommet2->tagged == 0 && Sommet1->tagged == 0){
                 Sommet1->tagged = Sommet1->valeur;
                 Sommet2->tagged = Sommet1->valeur;
+                //printf("Les sommets %d et %d ont ete tag \n", Sommet1->valeur, Sommet2->valeur);
 
-                printf("Les sommets %d et %d ont ete tag \n", Sommet1->valeur, Sommet2->valeur);
+                sommepoids += pppoids;
+            }
+
+            if (Sommet1->tagged == 1 && Sommet2->tagged != 1){
+                for (int k =0; k<pGraphe->ordre; k++){
+                    if (pGraphe->pSommet[k]->tagged == Sommet2->tagged){
+                        pGraphe->pSommet[k]->tagged = 1;
+                    }
+                }
+                sommepoids += pppoids;
+            }
+            else if (Sommet2->tagged == 1 && Sommet1->tagged != 1){
+                for (int k =0; k<pGraphe->ordre; k++){
+                    if (pGraphe->pSommet[k]->tagged == Sommet1->tagged){
+                        pGraphe->pSommet[k]->tagged = 1;
+                    }
+                }
             }
         }
+
         etape++;
         i=0;
     }
+
+    printf("\n \n la somme des poids vaut %d", sommepoids);
 }
 
 
@@ -479,6 +515,9 @@ int main()
 {
     Graphe * g;
     Graphe * dijkstra;
+
+    int numTP;
+    int choixTP;
 
     int sommetdepart;
 
@@ -488,33 +527,46 @@ int main()
     File fileattenteDFS = fileVide();     //DFS
     char nom_fichier[50];
 
-    printf("entrer le nom du fichier du labyrinthe: ");
+    printf("entrer le nom du fichier du labyrinthe:\n");
     gets(nom_fichier);
 
-    //g = lire_graphe(nom_fichier);
+    printf("Quel TP souhaitez vous utliser ? (2, 3 ou 5) \n");
+    scanf("%d",&numTP);
+
+    if (numTP == 2){
+
+        g = lire_graphe(nom_fichier);
+
+        printf("Souhaitez vous faire un BFS ou un DFS ? (1 / 2) \n");
+        scanf("%d", &choixTP);
+
+        printf("quel est le sommet initial ");
+        scanf("%d",&sommetdepart);
+
+        if (choixTP == 1){
+            BFS(g, sommetdepart,&fileattenteBFS);
+        }
+
+        if (choixTP == 2) {
 
 
-    /*for (int i=0; i<g->ordre; i++){       //on initalise la découverte des sommets pour le DFS (l'téta est stocké dans la structure des sommets
-        g->pSommet[i]->tagged = false;
-    }*/
+            DFS(g, sommetdepart,etape, &fileattenteDFS);
 
-    dijkstra = lire_graphe_TP3(nom_fichier);
+        }
+    }
 
-    ///saisie du numéro du sommet initial pour lancer un BFS puis un DSF
-    printf("quel est le sommet initial ");
-    scanf("%d",&sommetdepart);
+    if (numTP == 3){
+        printf("quel est le sommet initial ");
+        scanf("%d",&sommetdepart);
 
-    //printf("%d \n", sommetdepart);
+        dijkstra = lire_graphe_TP3(nom_fichier);
+        Dijkstra(dijkstra, sommetdepart);
+    }
 
-    //Dijkstra(dijkstra, sommetdepart);
-
-    Kruskal_fct(dijkstra);
-
-    //BFS(g, sommetdepart,&fileattenteBFS);
-
-    //DFS(g, sommetdepart, etape, &fileattenteDFS);
-
-    //afficher_composantes_connexes(g);
+    if (numTP == 5){
+        dijkstra = lire_graphe_TP3(nom_fichier);
+        Kruskal_fct(dijkstra);
+    }
 
     /// afficher le graphe
     //graphe_afficher(g);
