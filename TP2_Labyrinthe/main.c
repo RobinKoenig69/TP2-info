@@ -410,30 +410,68 @@ void Dijkstra(Graphe *pGraphe, int sommetdepart) {
     }
 }
 
+
 void Kruskal_fct(Graphe* pGraphe){
     if (pGraphe == NULL) {
         fprintf(stderr, "Erreur - le graphe n'existe pas\n");
         exit(1);
     }
 
+
+
     int sommet1, sommet2;               //on définit les deux sommets de départ et d'arrivée de l'arc courant
     pSommet Sommet1, Sommet2;           // on définit les deux sommets équivalents a leurs numéros (strucutre)
 
-
-    int pppoids = pGraphe->poidsKruskal[0];         // on récupère le plus petit poids dans le tableau du graphe
+    int pppoids;
 
     int i =0;
+    int etape = 0;
+    int currenttagged = 1;
 
-    pGraphe->poidsKruskal[0] = INT_MAX;             // on passe la plus petite distance à int max pour ne pas s'en resservir par la suite
 
-    while (pGraphe->tableaukruskal[i].poids != pppoids){
-        i++;
+
+    while (etape !=pGraphe->taille){
+
+        pppoids = pGraphe->poidsKruskal[0];                   // on récupère le plus petit poids dans le tableau du graphe
+        pGraphe->poidsKruskal[0] = INT_MAX-etape;             // on passe la plus petite distance à int max pour ne pas s'en resservir par la suite
+
+        while (pGraphe->tableaukruskal[i].poids != pppoids){
+            i++;
+        }
+
+        qsort(pGraphe->poidsKruskal, pGraphe->taille, sizeof(int), cmpfunc);      // on retrie les poids dans l'ordre croissant
+
+        sommet1 = pGraphe->tableaukruskal[i].sommet1;
+        sommet2 = pGraphe->tableaukruskal[i].sommet2;
+
+        Sommet1 = pGraphe->pSommet[sommet1];
+        Sommet2 = pGraphe->pSommet[sommet2];
+
+        if (etape == 0){
+            Sommet1->tagged = currenttagged;            // on tag les sommets à 0
+            Sommet2->tagged = currenttagged;
+
+            printf("on tag les sommets de depart");
+        }
+        else{
+            if(Sommet1->tagged != 0 && Sommet2->tagged == 0){
+                Sommet2->tagged = 1;
+                printf("Sommet %d a ete tag \n", Sommet2->valeur);
+            }
+            if(Sommet2->tagged != 0 && Sommet1->tagged == 0){
+                Sommet1->tagged = 1;
+                printf("Sommet %d a ete tag \n", Sommet1->valeur);
+            }
+            if (Sommet2->tagged == 0 && Sommet1->tagged == 0){
+                Sommet1->tagged = Sommet1->valeur;
+                Sommet2->tagged = Sommet1->valeur;
+
+                printf("Les sommets %d et %d ont ete tag \n", Sommet1->valeur, Sommet2->valeur);
+            }
+        }
+        etape++;
+        i=0;
     }
-
-    sommet1 = pGraphe->tableaukruskal[i].sommet1;
-    sommet2 = pGraphe->tableaukruskal[i].sommet2;
-
-
 }
 
 
@@ -468,8 +506,9 @@ int main()
 
     //printf("%d \n", sommetdepart);
 
-    Dijkstra(dijkstra, sommetdepart);
+    //Dijkstra(dijkstra, sommetdepart);
 
+    Kruskal_fct(dijkstra);
 
     //BFS(g, sommetdepart,&fileattenteBFS);
 
