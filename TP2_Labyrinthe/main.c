@@ -459,7 +459,7 @@ void Kruskal_fct(Graphe* pGraphe){
             Sommet1->tagged = currenttagged;            // on tag les sommets à 0
             Sommet2->tagged = currenttagged;
 
-            printf("on tag les sommets de depart \n");
+            //printf("on tag les sommets de depart \n");
             sommepoids += pppoids;
 
         }
@@ -512,6 +512,11 @@ void Kruskal_fct(Graphe* pGraphe){
 
 void prim (Graphe* pGraphe, int sommetdepart){
 
+    if (pGraphe == NULL) {
+        fprintf(stderr, "Erreur - le graphe n'existe pas\n");
+        exit(1);
+    }
+
     int* parent = malloc(pGraphe->ordre * sizeof(int));
     int* liste_poids_arbre = malloc(pGraphe->ordre * sizeof(int));
     int* sommet_inclu = malloc(pGraphe->ordre * sizeof(int)); // équivalent à tagged
@@ -531,7 +536,7 @@ void prim (Graphe* pGraphe, int sommetdepart){
     for (int i = 0; i < pGraphe->ordre - 1; i++) {
         int min = INT_MAX, u;
 
-        // Trouver le sommet adjacent avec le poids minimale sur l'arête liante, à partir
+        // Trouver le sommet adjacent avec le poids minimal sur l'arête liante, à partir
         // de l'ensemble des sommets non encore inclus dans sommet_inclu
         for (int v = 0; v < pGraphe->ordre; v++) {
             if (sommet_inclu[v] == 0 && liste_poids_arbre[v] < min)
@@ -563,6 +568,27 @@ void prim (Graphe* pGraphe, int sommetdepart){
     free(liste_poids_arbre);
     free(sommet_inclu);
 
+}
+
+void free_graphe(Graphe * pGraphe){
+
+    if (pGraphe == NULL) {
+        fprintf(stderr, "Erreur - le graphe n'existe pas\n");
+        exit(1);
+    }
+
+    int taille = pGraphe->taille;
+    int ordre = pGraphe->ordre;
+
+    if (pGraphe->tableaukruskal != NULL){
+        free(pGraphe->tableaukruskal);
+    }
+    if (pGraphe->poidsKruskal != NULL){
+        free(pGraphe->poidsKruskal);
+    }
+
+    free(pGraphe->pSommet);
+    free(pGraphe);
 }
 
 int main()
@@ -605,8 +631,9 @@ int main()
 
 
             DFS(g, sommetdepart,etape, &fileattenteDFS);
-
         }
+
+        free_graphe(g);
     }
 
     if (numTP == 3){
@@ -615,6 +642,8 @@ int main()
 
         dijkstra = lire_graphe_TP3(nom_fichier);
         Dijkstra(dijkstra, sommetdepart);
+
+        free_graphe(dijkstra);
     }
 
     if (numTP == 5){
@@ -632,10 +661,14 @@ int main()
         prim (dijkstra,sommetdepart);
         }
 
+        free_graphe(dijkstra);
     }
+
 
     /// afficher le graphe
     ///graphe_afficher(g);
+
+
 
     return 0;
 }
