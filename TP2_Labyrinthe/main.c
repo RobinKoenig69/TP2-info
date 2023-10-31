@@ -510,6 +510,60 @@ void Kruskal_fct(Graphe* pGraphe){
     printf("\n \n la somme des poids vaut %d", sommepoids);
 }
 
+void prim (Graphe* pGraphe, int sommetdepart){
+
+    int* parent = malloc(pGraphe->ordre * sizeof(int));
+    int* liste_poids_arbre = malloc(pGraphe->ordre * sizeof(int));
+    int* sommet_inclu = malloc(pGraphe->ordre * sizeof(int)); // équivalent à tagged
+    int poidsTotal = 0;
+
+
+    // Initialisation de tous les sommets
+    for (int i = 0; i < pGraphe->ordre; i++) {
+        liste_poids_arbre[i] = INT_MAX;
+        sommet_inclu[i] = 0; // Non inclus dans MST
+    }
+
+    //Initialisation Sommet départ
+    liste_poids_arbre[sommetdepart] = 0; // Le sommet de départ est toujours inclus
+    parent[sommetdepart] = -1; // Le sommet de départ est la racine du MST
+
+    for (int i = 0; i < pGraphe->ordre - 1; i++) {
+        int min = INT_MAX, u;
+
+        // Trouver le sommet adjacent avec le poids minimale sur l'arête liante, à partir
+        // de l'ensemble des sommets non encore inclus dans sommet_inclu
+        for (int v = 0; v < pGraphe->ordre; v++) {
+            if (sommet_inclu[v] == 0 && liste_poids_arbre[v] < min)
+                min = liste_poids_arbre[v], u = v;
+        }
+        sommet_inclu[u] = 1;
+
+        pArc arc;
+        for (arc = pGraphe->pSommet[u]->arc; arc != NULL; arc = arc->arc_suivant) {
+            if (sommet_inclu[arc->sommet] == 0 && arc->poids < liste_poids_arbre[arc->sommet]) {
+                parent[arc->sommet] = u;
+                liste_poids_arbre[arc->sommet] = arc->poids;
+
+            }
+        }
+    }
+
+    printf("Arete   Poids\n");
+    for (int i = 0; i < pGraphe->ordre; i++) {
+        if(parent[i] != -1) {
+            printf("%d - %d    %d \n", parent[i], i, liste_poids_arbre[i]);
+            poidsTotal += liste_poids_arbre[i];
+        }
+    }
+
+    printf("Poids total de l'arbre de recouvrement minimal : %d\n", poidsTotal);
+
+    free(parent);
+    free(liste_poids_arbre);
+    free(sommet_inclu);
+
+}
 
 int main()
 {
@@ -564,12 +618,24 @@ int main()
     }
 
     if (numTP == 5){
+        printf("Souhaitez vous faire un Kruskal ou un Prim ? (1 / 2) \n");
+        scanf("%d", &choixTP);
+
+        if( choixTP == 1){
+            dijkstra = lire_graphe_TP3(nom_fichier);
+            Kruskal_fct(dijkstra);
+        }
+        else if ( choixTP == 2){
+        printf("quel est le sommet initial\n ");
+        scanf("%d",&sommetdepart);
         dijkstra = lire_graphe_TP3(nom_fichier);
-        Kruskal_fct(dijkstra);
+        prim (dijkstra,sommetdepart);
+        }
+
     }
 
     /// afficher le graphe
-    //graphe_afficher(g);
+    ///graphe_afficher(g);
 
     return 0;
 }
